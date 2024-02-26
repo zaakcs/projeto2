@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="{{ url_for('static', filename='img/ufrpe.jpg') }}" alt="UFRPE Logo" class="logo">
+            <h1>Cadastro</h1>
+        </header>
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" class="registration-form">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input type="text" name="cpf" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" name="senha" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo:</label>
+                <div class="radio-group">
+                    <input type="radio" name="tipo" value="aluno" id="aluno" required>
+                    <label for="aluno">Aluno</label>
+
+                    <input type="radio" name="tipo" value="psicologo" id="psicologo" required>
+                    <label for="psicologo">Psicólogo</label>
+                </div>
+            </div>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <p class="login-link">Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui</a>.</p>
+    </div>
+</body>
+</html>

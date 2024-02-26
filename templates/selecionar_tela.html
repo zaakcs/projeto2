@@ -1,0 +1,24 @@
+<!-- Selecionar Tela -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecionar Tela</title>
+</head>
+<body>
+    <h2>Selecionar Tela</h2>
+    <button onclick="redirecionar('aluno')">Página do Aluno</button>
+    <button onclick="redirecionar('psicologo')">Página do Psicólogo</button>
+
+    <script>
+        function redirecionar(tipo) {
+            if (tipo === 'aluno') {
+                window.location.href = '/pagina_do_aluno';
+            } else if (tipo === 'psicologo') {
+                window.location.href = '/pagina_do_psicologo';
+            }
+        }
+    </script>
+</body>
+</html>

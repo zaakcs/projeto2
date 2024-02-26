@@ -1,0 +1,67 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: center;
+    margin: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 10%;  /* Ajuste o valor conforme necessário */
+    height: auto;
+    border-radius: 10px;  /* Adiciona borda arredondada à imagem */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-message {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: #3498db;  /* Define a cor da mensagem para azul claro */
+}
+
+.boxes-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.box {
+    background-color: #fff;
+    color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+/* Adiciona borda azul para Consultas Agendadas e Datas Indisponíveis */
+.appointments-box, .unavailable-dates-box {
+    border: 2px solid #3498db;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.consultation-list {
+    list-style: none;
+    padding: 0;
+}
+
+.unavailable-dates-list {
+    list-style: none;
+    padding: 0;
+}
+
+.consultation-list li,
+.unavailable-dates-list li {
+    margin-bottom: 10px;
+}

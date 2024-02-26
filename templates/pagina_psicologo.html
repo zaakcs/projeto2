@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Página do Psicólogo</title>
+
+    <!-- Adicione o link para o arquivo CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles4.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="{{ url_for('static', filename='img/ufrpe.jpg') }}" alt="UFRPE Logo" class="logo">
+        <h1 class="welcome-message">Bem-vindo ao Sistema de Apoio Psicológico da UFRPE</h1>
+    </header>
+
+    <div class="boxes-container">
+        <section class="box appointments-box">
+            <h2>Consultas Agendadas</h2>
+            <ul class="consultation-list">
+                {% for consulta in consultas %}
+                    <li data-consulta-id="{{ consulta.id }}">
+                        {{ consulta.data_hora_formatted }} - {{ consulta.aluno.nome }}
+                        {% if not consulta.finalizada %}
+                            <a href="{{ url_for('finalizar_consulta', consulta_id=consulta.id) }}" class="finalizar-consulta">
+                                Finalizar Consulta
+                            </a>
+                            <span id="mensagem-finalizacao-{{ consulta.id }}" style="display: none;">Sua consulta foi finalizada</span>
+                        {% else %}
+                            <span class="arrow">➔</span>
+                            <span class="finalizada">Consulta Finalizada</span>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="box unavailable-dates-box">
+            <h2>Datas Indisponíveis</h2>
+            <ul id="unavailable-dates-list" class="unavailable-dates-list">
+                <!-- As datas indisponíveis serão adicionadas dinamicamente aqui -->
+            </ul>
+        </section>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    function finalizarConsulta(element) {
+        var idConsulta = $(element).closest('li').data('consulta-id');
+        $(element).hide();
+        $('#mensagem-finalizacao-' + idConsulta).show();
+
+        // Adicione a lógica para marcar a consulta como finalizada no servidor, se necessário
+        $.ajax({
+            url: '/finalizar_consulta/' + idConsulta,
+            method: 'GET',
+            success: function (data) {
+                // Adicione qualquer lógica adicional após finalizar a consulta no servidor
+            },
+            error: function (error) {
+                console.error('Erro ao finalizar consulta:', error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        // Função para carregar as datas indisponíveis
+        function loadUnavailableDates() {
+            // Chama a rota /get_unavailable_dates para obter as datas indisponíveis
+            $.ajax({
+                url: '/get_unavailable_dates',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // Limpa a lista existente
+                    $('#unavailable-dates-list').empty();
+
+                    // Adiciona as novas datas à lista
+                    data.unavailableDates.forEach(function (date) {
+                        $('#unavailable-dates-list').append('<li>' + date + '</li>');
+                    });
+                },
+                error: function (error) {
+                    console.error('Erro ao carregar datas indisponíveis:', error);
+                }
+            });
+        }
+
+        // Carrega as datas indisponíveis na inicialização da página
+        loadUnavailableDates();
+
+        // Define um intervalo para atualizar as datas indisponíveis a cada X segundos
+        setInterval(loadUnavailableDates, 60000);  // Atualiza a cada 60 segundos (ajuste conforme necessário)
+    });
+</script>
+
+</body>
+</html>
